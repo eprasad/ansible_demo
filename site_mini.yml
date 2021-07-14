@@ -1,0 +1,23 @@
+---
+- name: create a sandbox instance
+  hosts: localhost
+  gather_facts: False
+  vars:
+    keypair: ansible_tower
+    instance_type: t2.micro
+    image: ami-0ba62214afa52bec7
+    region: us-east-2
+  tasks:
+    - name: launch instance
+      ec2:
+         key_name: "{{ keypair }}"
+         group: default
+         instance_type: "{{ instance_type }}"
+         image: "{{ image }}"
+         wait: true
+         region: "{{ region }}"
+         aws_secret_key: QsoKhSuMqCrAKDlFgB/6yHA0615hmpCvrvVttVZJ
+         aws_access_key: AKIAZPC337OFI43Q4656
+      register: ec2
+    - name: print all ec2 variables
+      debug: var=ec2
