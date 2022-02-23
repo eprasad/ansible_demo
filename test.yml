@@ -1,0 +1,9 @@
+---
+- name: create a sandbox instance
+  hosts: localhost
+  gather_facts: False
+  tasks:
+    - name: Perform Operations 
+      wait_for:
+        timeout: 60
+      delegate_to: localhost
