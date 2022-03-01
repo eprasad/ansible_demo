@@ -7,13 +7,13 @@
     vm_name: enterhere 
   tasks:
 
- #   - name: Log in to openshift (obtain access token)
- #     k8s_auth:
- #       host: https://api.ocpbmipi.intel.demolab.com:6443
- #       username: "{{ username_ocp }}" 
- #       password: "{{ password_ocp }}"
- #       validate_certs: false
- #     register: k8s_auth_results
+    - name: Log in to openshift (obtain access token)
+      k8s_auth:
+        host: https://api.ocpbmipi.intel.demolab.com:6443
+        username: "{{ username_ocp }}" 
+        password: "{{ password_ocp }}"
+        validate_certs: false
+      register: k8s_auth_results
 
 
     - name: Start RHEL8 vm with cloud init
