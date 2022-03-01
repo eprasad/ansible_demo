@@ -1,6 +1,6 @@
 ---
 - name: Playbook to create VM in OpenShift Virtualization
-  hosts: localhost
+  hosts: jumpbox
   vars:
     password_ocp: enterhere
     username_ocp: enterhere
