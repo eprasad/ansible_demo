@@ -14,6 +14,10 @@
         password: "{{ password_ocp }}"
         validate_certs: false
       register: k8s_auth_results
+      
+    - name: debug
+      debug:
+        var: k8s_auth_results
 
 
     - name: Start RHEL8 vm with cloud init
