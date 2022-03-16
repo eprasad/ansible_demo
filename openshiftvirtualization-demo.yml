@@ -1,25 +1,22 @@
----
 - name: Playbook to create VM in OpenShift Virtualization
-  hosts: jumpbox
+  hosts: localhost
+  module_defaults:
+    group/k8s:
+      host: https://api.ocp49upibm.intel.demolab.com:6443
+      validate_certs: false
   vars:
-    password_ocp: enterhere
-    username_ocp: enterhere
-    vm_name: enterhere 
+    password_ocp: test
+    username_ocp: test
+    vm_name: test
+
   tasks:
 
     - name: Log in to openshift (obtain access token)
       k8s_auth:
-        host: https://api.ocp49upibm.intel.demolab.com:6443
-        username: "{{ username_ocp }}" 
+        username: "{{ username_ocp }}"
         password: "{{ password_ocp }}"
-        validate_certs: false
       register: k8s_auth_results
       
-    - name: debug
-      debug:
-        var: k8s_auth_results
-
-
     - name: Start RHEL8 vm with cloud init
       kubevirt_vm:
           api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"
@@ -42,8 +39,9 @@
                   image: registry.redhat.io/rhel8/rhel-guest-image
               disk:
                 bus: virtio
+      ignore_errors: yes
 
-    - name: Gather facts of the newly created vm 
+    - name: Gather facts of the newly created vm
       k8s_info:
         api_key: "{{ k8s_auth_results.k8s_auth.api_key }}"
         name: "{{ vm_name }}"
